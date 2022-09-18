@@ -74,77 +74,77 @@ Using the this information the geocoordinates belong to connectors or edges betw
 
 The calculated information is then returned along with N and k.
 
-  return N, k, coordinates
+      return N, k, coordinates
 
 Next the function for plotting the map is created. It takes the returned information from the pervious function as parameters.
 
-  def plot_map(N, k, coordinates):
+      def plot_map(N, k, coordinates):
 
 The map figure is created and styled using Plotly. An API access token from Mapbox can be acquired for free after signing up. Mapbox has many beautiful maps from a variety of contributors. These look nice in academic papers. Remember to attribute the map creator. Times New Roman was used and the shape was set to a square. The nodes are added from the dataset.
 
-      fig = px.scatter_mapbox(
-          df, 
-          lat="LATITUDE", 
-          lon="LONGITUDE", 
-          zoom=12.2,
-          color_discrete_sequence=["rgb(255, 203, 3)"],
-          title="<span style='font-size: 32px;'><b>K-Nearest Neighbor KNN
-          Map</b></span>",
-          opacity=.8,
-          width=1000,
-          height=1000,
-          center=go.layout.mapbox.Center(
-                  lat=48.14,
-                  lon=11.57,
-              ),
-          size_max=15
-          )
+            fig = px.scatter_mapbox(
+                df, 
+                lat="LATITUDE", 
+                lon="LONGITUDE", 
+                zoom=12.2,
+                color_discrete_sequence=["rgb(255, 203, 3)"],
+                title="<span style='font-size: 32px;'><b>K-Nearest Neighbor KNN
+                Map</b></span>",
+                opacity=.8,
+                width=1000,
+                height=1000,
+                center=go.layout.mapbox.Center(
+                        lat=48.14,
+                        lon=11.57,
+                    ),
+                size_max=15
+                )
 
-      # Now using Mapbox
-      fig.update_layout(mapbox_style="light", 
-                      mapbox_accesstoken="",
-                      legend=dict(yanchor="top", y=1, xanchor="left",x=0.9),
-                      title=dict(yanchor="top", y=.85, xanchor="left",x=0.085),
-                      font_family="Times New Roman",
-                      font_color="#333333",
-                      title_font_size = 32,
-                      font_size = 18)
+            # Now using Mapbox
+            fig.update_layout(mapbox_style="light", 
+                            mapbox_accesstoken="",
+                            legend=dict(yanchor="top", y=1, xanchor="left",x=0.9),
+                            title=dict(yanchor="top", y=.85, xanchor="left",x=0.085),
+                            font_family="Times New Roman",
+                            font_color="#333333",
+                            title_font_size = 32,
+                            font_size = 18)
 
 The node diameters are set to 15.
 
-      # diameter of the plots 
-      fig.update_traces(marker={'size': 15})
+            # diameter of the plots 
+            fig.update_traces(marker={'size': 15})
 
 Using the information from the parameters the connectors are generated and added to the map.
 
-      # add line connectors
-      lines = coordinates.reshape((N*k, 2, 2))
-
-      i = 0
-      for row in lines:
-          fig.add_trace(go.Scattermapbox(lon=[lines[i][0].[0],
-              lines[i][1][0]], 
-              lat=[lines[i][0][1],
-              lines[i][1][1]], 
-              mode='lines', 
-              showlegend = False, 
-              line=dict(color='#ffcb03')))
-          i += 1
+            # add line connectors
+            lines = coordinates.reshape((N*k, 2, 2))
+            
+            i = 0
+            for row in lines:
+                fig.add_trace(go.Scattermapbox(lon=[lines[i][0].[0],
+                    lines[i][1][0]], 
+                    lat=[lines[i][0][1],
+                    lines[i][1][1]], 
+                    mode='lines', 
+                    showlegend = False, 
+                    line=dict(color='#ffcb03')))
+                i += 1
 
 The line connectors are z-indexed below the nodes.
 
-      # line connectors layered below plots    
-      fig.data = fig.data[::-1]  
+            # line connectors layered below plots    
+            fig.data = fig.data[::-1]  
 
 Finally the map is saved in the output folder and rendered in the browser.
 
-      # Save map in output folder
-      print("Saving image to output folder...");
-      fig.write_image('output/knn_map.jpg', scale=5)
-
-      # Show map in web browser
-      print("Generating map in browser...");
-      fig.show()
+            # Save map in output folder
+            print("Saving image to output folder...");
+            fig.write_image('output/knn_map.jpg', scale=5)
+            
+            # Show map in web browser
+            print("Generating map in browser...");
+            fig.show()
 
 After defining the functions we import our data from the data directory and format it.
 
@@ -176,3 +176,5 @@ Finally we call our two functions to compute and create our KNN map.
     plot_map(N, k, coordinates)
 
 KNN could be used, for instance, to predict how viruses and other pathogens will move across a given region or spatial area by creating a graph from the individual cases. However for traffic-related forecasting, it is preferable to construct the graph directly from the road network using the Dijkstra algorithm.
+
+Sources for KNN: https://stackoverflow.com/questions/50040310/efficient-way-to-connect-the-k-nearest-neighbors-in-a-scatterplot-using-matplotl
