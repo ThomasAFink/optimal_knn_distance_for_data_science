@@ -46,35 +46,35 @@ Next a function generate_knn_grid is created which returns the K-NN grid. This f
 
 Inside the function the parameters for the KNN algorithm are defined. N is the number of nearest neighbours or nearest nodes we want to connect. As a standard practice K is set to the square root of the number of nearest neighbours. X stacks the geocoordinate data point into a 2D Array.
 
-      # Parameters for the k-nearest neighbor algorithm
-      N = len(list(df.LATITUDE))
-      k = round(sqrt(N))
-      X = np.column_stack((lat, lon))
+            # Parameters for the k-nearest neighbor algorithm
+            N = len(list(df.LATITUDE))
+            k = round(sqrt(N))
+            X = np.column_stack((lat, lon))
 
 Next the Euclidean distances between the geocoordinates or nodes can be generated. pdist returns a matrix of distance between each pairs of nodes.
 
-      # matrix of pairwise Euclidean distances will determine which dector node 
-      is connected to another dector node
-      distmat = squareform(pdist(X, 'euclidean'))
+            # matrix of pairwise Euclidean distances will determine which dector node 
+            is connected to another dector node
+            distmat = squareform(pdist(X, 'euclidean'))
 
 For each node the nearest neighbours are determined using the Euclidean distance matrix.
 
-      # select the kNN for each datapoint
-      neighbors = np.sort(np.argsort(distmat, axis=1)[:, 0:k])
+            # select the kNN for each datapoint
+            neighbors = np.sort(np.argsort(distmat, axis=1)[:, 0:k])
 
 Using the this information the geocoordinates belong to connectors or edges between the nodes can be calculated.
 
-      # get edge coordinates for the lines connecting the nodes
-      coordinates = np.zeros((N, k, 2, 2))
+            # get edge coordinates for the lines connecting the nodes
+            coordinates = np.zeros((N, k, 2, 2))
 
-      for i in np.arange(len(list(df.LATITUDE))):
-          for j in np.arange(k):
-              coordinates[i, j, :, 0] = np.array([X[i,:][1], X[neighbors[i, j], :][1]])
-              coordinates[i, j, :, 1] = np.array([X[i,:][0], X[neighbors[i, j], :][0]])
+            for i in np.arange(len(list(df.LATITUDE))):
+                for j in np.arange(k):
+                    coordinates[i, j, :, 0] = np.array([X[i,:][1], X[neighbors[i, j], :][1]])
+                    coordinates[i, j, :, 1] = np.array([X[i,:][0], X[neighbors[i, j], :][0]])
 
 The calculated information is then returned along with N and k.
 
-      return N, k, coordinates
+            return N, k, coordinates
 
 Next the function for plotting the map is created. It takes the returned information from the pervious function as parameters.
 
