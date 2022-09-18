@@ -1,4 +1,4 @@
-# Plotting the a Graph of the Nearest Points for Data Scientists in Python using the K-Nearest Neighbour K-NN Algorithm
+# Plotting the Optimal Distance for Data Scientists in Python using the K-Nearest Neighbour K-NN Algorithm
 
 This example uses the K-Nearest Neighbour K-NN to connect several points and plotting those as a graph on a Plotly map. This is a quick and simple example that data scientists can use to illustrate a path(s) for their professional or academic papers.
 
