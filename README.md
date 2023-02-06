@@ -1,5 +1,7 @@
 # Plotting the Optimal Distance for Data Scientists in Python using the K-Nearest Neighbour K-NN Algorithm
 
+<img src="https://github.com/ThomasAFink/optimal_knn_distance_for_data_science/blob/main/output/knn_map.jpg?raw=true" width="450" align="right">
+
 This example uses the K-Nearest Neighbour K-NN to connect several points and plotting those as a graph on a Plotly map. This is a quick and simple example that data scientists can use to illustrate a graph for their professional or academic papers.
 
 A brief file structure overview of the repository is provided. The knn_map.py is in the root directory. The data folder houses a list of target geocoordinates in a csv file. The out map is generated in the output folder.
